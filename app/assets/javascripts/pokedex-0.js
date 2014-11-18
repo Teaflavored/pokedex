@@ -21,6 +21,7 @@ Pokedex.Models.Pokemon = Backbone.Model.extend({
 }); // WRITE ME
 
 Pokedex.Models.Toy = Backbone.Model.extend ({
+  urlRoot: "/toys"
 }); // WRITE ME IN PHASE 2
 
 Pokedex.Collections.Pokemon = Backbone.Collection.extend({
@@ -70,6 +71,8 @@ window.Pokedex.RootView = function ($el) {
   this.$pokeDetail.on("click", "ul.toys li", (function(event) {
     this.selectToyFromList(event);
   }).bind(this))
+  
+  this.$toyDetail.on("change", "select", this.reassignToy.bind(this));
 };
 
 $(function() {

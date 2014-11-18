@@ -1,5 +1,5 @@
-Pokedex.RootView.prototype.addToyToList = function (toy, pokemon) {
-  var toyString =  "<li class=\"poke-list-item\" data-toy-id=\"" + toy.id + "\" data-pokemon-id=\"" + pokemon.id + "\">";
+Pokedex.RootView.prototype.addToyToList = function (toy) {
+  var toyString =  "<li class=\"poke-list-item\" data-toy-id=\"" + toy.id + "\" data-pokemon-id=\"" + toy.escape("pokemon_id") + "\">";
   toyString += "name: " + toy.escape("name") + "<br>happiness: " + toy.escape("happiness") + "<br>price: " + toy.escape("price")
   this.$pokeDetail.find("ul.toys").append(toyString)
 };
@@ -16,7 +16,19 @@ Pokedex.RootView.prototype.renderToyDetail = function (toy) {
       $div.append(attributeString);
     } 
   }
-  this.$toyDetail.html($div)   
+  
+  this.$toyDetail.html($div)
+  var selectString = "<select data-pokemon-id=\"" + toy.escape("pokemon_id") + "\" data-toy-id=\"" + toy.id + "\">"
+  this.pokes.each(function(pokemon){
+    
+    selectString += "<option value=\"" + pokemon.id + "\" "
+    if (pokemon.id == toy.escape("pokemon_id")){
+      selectString += "selected"
+    }
+    selectString += ">" + pokemon.escape("name") + "</option>"
+  })
+  selectString += "</select>"
+  this.$toyDetail.append(selectString)   
 };
 
 

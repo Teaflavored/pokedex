@@ -16,9 +16,7 @@ Pokedex.RootView.prototype.renderPokemonDetail = function (pokemon){
       
   pokemon.fetch({
     success: function(){
-      pokemon.toys().each(function(toy){
-        this.addToyToList(toy, pokemon)
-      }.bind(this))
+      this.renderToysList(pokemon.toys());
     }.bind(this)
   })
 };
