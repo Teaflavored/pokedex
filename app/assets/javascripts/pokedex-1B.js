@@ -1,17 +1,12 @@
 Pokedex.RootView.prototype.renderPokemonDetail = function (pokemon){ 
-  var $div = $("<div>")
-  $div.addClass("detail");
-  var imageString = "<img src=" + pokemon.escape("image_url") + ">";
-  $div.append(imageString);
-  $div.append("<h3>Pokemon Details</h3>");
-  for (var attribute in pokemon.attributes) {
-    if (attribute !== "image_url" && attribute !== "pokemon") {
-      var attributeString = attribute + ": " + pokemon.escape(attribute) + "<br>"
-      $div.append(attributeString);
-    } 
-  }
+  
+  var scriptContent = $("script#pokemon-detail-template").html()
+  var templateFn = _.template(scriptContent);
+  var contentToPlace = templateFn({pokemon: pokemon})
+  
+
   var $ul = $("<ul class=\"toys\">")
-  this.$pokeDetail.html($div)
+  this.$pokeDetail.html(contentToPlace)
   this.$pokeDetail.append($ul)
       
   pokemon.fetch({

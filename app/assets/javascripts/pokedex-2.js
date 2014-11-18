@@ -5,19 +5,12 @@ Pokedex.RootView.prototype.addToyToList = function (toy) {
 };
 
 Pokedex.RootView.prototype.renderToyDetail = function (toy) {
-  var $div = $("<div>")
-  $div.addClass("detail");
-  var imageString = "<img src=" + toy.escape("image_url") + ">";
-  $div.append(imageString);
-  $div.append("<h3>Toy Detail</h3>");
-  for (var attribute in toy.attributes) {
-    if (attribute !== "image_url" && attribute !== "toy") {
-      var attributeString = attribute + ": " + toy.escape(attribute) + "<br>"
-      $div.append(attributeString);
-    } 
-  }
   
-  this.$toyDetail.html($div)
+  var scriptContent = $("script#toy-detail-template").html()
+  var templateFn = _.template(scriptContent);
+  var contentToPlace = templateFn({toy: toy})
+  
+  this.$toyDetail.html(contentToPlace)
   var selectString = "<select data-pokemon-id=\"" + toy.escape("pokemon_id") + "\" data-toy-id=\"" + toy.id + "\">"
   this.pokes.each(function(pokemon){
     
